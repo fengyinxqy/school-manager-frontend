@@ -21,6 +21,11 @@ const router = createRouter({
       name: 'TeacherManage',
       component: () => import('@/views/teacher-manage/teacher-manage.vue'),
     },
+    {
+      path: '/subject-manage',
+      name: 'SubjectManage',
+      component: () => import('@/views/subject-manage/subject-manage.vue'),
+    },
   ],
 })
 

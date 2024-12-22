@@ -1,3 +1,4 @@
+import router from '@/router'
 import axios from 'axios'
 
 // 创建 axios 实例
@@ -46,8 +47,7 @@ request.interceptors.response.use(
       isRefreshing = true
 
       try {
-        // 尝试刷新 token
-        const res = await request.post('/api/auth/refresh-token')
+        await request.post('/refresh-token')
 
         // token 刷新成功，执行队列中的请求
         requests.forEach((cb) => cb())
@@ -55,8 +55,7 @@ request.interceptors.response.use(
 
         return request(originalRequest)
       } catch (refreshError) {
-        // token 刷新失败，需要重新登录
-        window.location.href = '/login'
+        router.push('/login')
         return Promise.reject(refreshError)
       } finally {
         isRefreshing = false

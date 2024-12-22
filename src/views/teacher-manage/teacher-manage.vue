@@ -5,7 +5,7 @@
     </div>
     <el-table :data="tableData" height="700" style="width: 100%" border>
       <el-table-column prop="name" label="姓名" width="180" />
-      <el-table-column prop="subject" label="学科" />
+      <el-table-column prop="subjectName" label="学科" />
       <el-table-column prop="createdAt" label="账号创建时间" />
       <el-table-column label="操作">
         <template #default="scope">
@@ -36,11 +36,11 @@ const addDialogVisible = ref(false)
 const getTeacherList = async () => {
   try {
     const res = await request.get('/teacher/list')
-    tableData.value = res.data.map(({ id, name, subject, createdAt }) => {
+    tableData.value = res.data.map(({ id, name, subjectName, createdAt }) => {
       return {
         id,
         name,
-        subject,
+        subjectName,
         createdAt: dayjs(createdAt).format('YYYY-MM-DD HH:mm:ss'),
       }
     })

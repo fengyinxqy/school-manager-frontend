@@ -39,6 +39,11 @@ const menuList = ref([
     icon: 'User',
     path: '/teacher-manage',
   },
+  {
+    name: '学科管理',
+    icon: 'HomeFilled',
+    path: '/subject-manage',
+  },
 ])
 const handleOpen = (key, keyPath) => {
   router.push(key)

@@ -13,13 +13,13 @@
       <el-form-item label="密码">
         <el-input v-model="form.password" disabled></el-input>
       </el-form-item>
-      <el-form-item label="学科" prop="subject">
-        <el-select v-model="form.subject" placeholder="请选择学科">
+      <el-form-item label="学科" prop="subjectId">
+        <el-select v-model="form.subjectId" placeholder="请选择学科">
           <el-option
             v-for="item in subjectList"
             :key="item.id"
             :label="item.name"
-            :value="item.name"
+            :value="item.id"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -47,7 +47,7 @@ const formRef = ref(null)
 const form = reactive({
   username: '',
   password: '123456',
-  subject: '',
+  subjectId: '',
 })
 
 const rules = {
@@ -55,17 +55,7 @@ const rules = {
   subjectId: [{ required: true, message: '请选择学科', trigger: 'change' }],
 }
 
-const subjectList = ref([
-  { id: 1, name: '语文' },
-  { id: 2, name: '数学' },
-  { id: 3, name: '英语' },
-  { id: 4, name: '物理' },
-  { id: 5, name: '化学' },
-  { id: 6, name: '生物' },
-  { id: 7, name: '政治' },
-  { id: 8, name: '历史' },
-  { id: 9, name: '地理' },
-])
+const subjectList = ref([])
 
 // 提交表单
 const handleSubmit = async () => {
@@ -90,8 +80,19 @@ const handleClose = () => {
   formRef.value?.resetFields()
 }
 
+const getSubjectList = async () => {
+  const res = await request.get('/subjects')
+  subjectList.value = res.data.map(({ name, id }) => {
+    return {
+      name,
+      id,
+    }
+  })
+}
+
 onMounted(() => {
   dialogVisible.value = true
+  getSubjectList()
 })
 </script>
 
